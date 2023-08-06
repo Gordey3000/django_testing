@@ -33,7 +33,7 @@ def comment(author, news):
         text='Текст',
         author=author,
         news=news
-        )
+    )
     return comment
 
 
