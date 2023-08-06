@@ -27,7 +27,7 @@ class TestNotesCreation(TestCase):
             'title': cls.NOTES_TITLE,
             'text': cls.NOTES_TEXT,
             'slug': cls.NOTES_SLUG
-            }
+        }
 
     def test_anonymous_user_cant_create_comment(self):
         response = self.client.post(self.url, data=self.form_data)
@@ -79,7 +79,7 @@ class TestSlugCreation(TestCase):
             'title': cls.NOTES_TITLE,
             'text': cls.NOTES_TEXT,
             'slug': cls.NOTES_SLUG
-            }
+        }
         cls.edit_url = reverse('notes:edit', args=(cls.notes.slug,))
         cls.delete_url = reverse('notes:delete', args=(cls.notes.slug,))
 
