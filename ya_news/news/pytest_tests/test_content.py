@@ -16,7 +16,7 @@ def test_news_order(all_news, client, url_home):
     response = client.get(url_home)
     object_list = response.context['object_list']
     all_dates = [news.date for news in object_list]
-    sorted_dates = sorted(all_dates)
+    sorted_dates = sorted(all_dates, reverse=True)
     assert all_dates == sorted_dates
 
 
@@ -27,7 +27,7 @@ def test_comments_order(client, news, created_comment, url_detail):
         created_comment.created for created_comment in news.comment_set.all()
     ]
     news.comment_set.all()
-    sorted_comments = sorted(all_set_comments, reverse=True)
+    sorted_comments = sorted(all_set_comments)
     assert all_set_comments == sorted_comments
 
 
