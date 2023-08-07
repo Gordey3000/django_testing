@@ -25,7 +25,7 @@ def test_comments_order(client, news, created_comment, url_detail):
     news = response.context['news']
     all_set_comments = [
         created_comment.created for created_comment in news.comment_set.all()
-        ]
+    ]
     news.comment_set.all()
     sorted_comments = sorted(all_set_comments, reverse=True)
     assert all_set_comments == sorted_comments
