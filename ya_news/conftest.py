@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import pytest
 from django.conf import settings
 from django.utils import timezone
-
+from django.urls import reverse
 from news.models import Comment, News
 
 
@@ -38,7 +38,7 @@ def comment(author, news):
 
 
 @pytest.fixture
-def slug_for_args(comment):
+def comment_id_for_args(comment):
     return comment.id,
 
 
@@ -73,3 +73,18 @@ def form_data():
     return {
         'text': 'Текст',
     }
+
+
+@pytest.fixture
+def url_home():
+    return reverse('news:home')
+
+
+@pytest.fixture
+def url_detail(news):
+    return reverse('news:detail', args=(news.id,))
+
+
+@pytest.fixture
+def url_delete(comment):
+    return reverse('news:delete', args=(comment.id,))
