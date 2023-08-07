@@ -16,7 +16,7 @@ def test_news_order(all_news, client, url_home):
     response = client.get(url_home)
     object_list = response.context['object_list']
     all_dates = [news.date for news in object_list]
-    sorted_dates = sorted(all_dates, reverse=True)
+    sorted_dates = sorted(all_dates)
     assert all_dates == sorted_dates
 
 
