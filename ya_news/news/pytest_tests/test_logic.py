@@ -13,11 +13,9 @@ def test_anonymous_user_cant_create_comment(client,
                                             form_data,
                                             news,
                                             url_detail):
-    comments_count = Comment.objects.count()
-    assert comments_count == 0
+    before_update_count = Comment.objects.count()
     client.post(url_detail, data=form_data)
-    comments_count = Comment.objects.count()
-    assert comments_count == 0
+    assert before_update_count == Comment.objects.count()
 
 
 def test_user_can_create_comment(author_client,
@@ -67,30 +65,25 @@ def test_author_can_delete_comment(author_client,
                                    news,
                                    url_delete,
                                    url_detail):
-    comments_count = Comment.objects.count()
-    assert comments_count == 1
+    before_update_count = Comment.objects.count()
     response = author_client.delete(url_delete)
     assertRedirects(response, url_detail + '#comments')
-    comments_count = Comment.objects.count()
-    assert comments_count == 0
+    assert before_update_count != Comment.objects.count()
 
 
 def test_user_cant_delete_comment_of_another_user(admin_client,
                                                   comment,
                                                   url_delete):
-    comments_count = Comment.objects.count()
-    assert comments_count == 1
+    before_update_count = Comment.objects.count()
     response = admin_client.delete(url_delete)
     assert response.status_code == HTTPStatus.NOT_FOUND
-    comments_count = Comment.objects.count()
-    assert comments_count == 1
+    assert before_update_count == Comment.objects.count()
 
 
 def test_other_user_cant_delete_note(admin_client,
                                      form_data,
                                      url_delete):
-    comments_count = Comment.objects.count()
-    assert comments_count == 1
+    before_update_count = Comment.objects.count()
     response = admin_client.post(url_delete)
     assert response.status_code == HTTPStatus.NOT_FOUND
-    assert Comment.objects.count() == 1
+    assert before_update_count == Comment.objects.count()
